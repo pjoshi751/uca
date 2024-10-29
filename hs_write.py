@@ -3,10 +3,14 @@ from haystack.document_stores import FAISSDocumentStore
 from haystack.nodes import PDFToTextConverter, PreProcessor
 from haystack.nodes import EmbeddingRetriever
 
-faiss_index_path = "faiss_index_test"
-faiss_config_path = "faiss_config_test"
+PDF='../docs/social-benefit-programs.pdf'
 
-document_store = FAISSDocumentStore(embedding_dim=384)
+faiss_index_path = "../faiss/test_index"
+faiss_config_path = "../faiss/test_config"
+faiss_db_path = "../faiss/faiss_document_store.db"
+
+document_store = FAISSDocumentStore(sql_url='sqlite:///'+ faiss_db_path, embedding_dim=384, )
+
 converter = PDFToTextConverter()
 preprocessor = PreProcessor()
 
@@ -15,8 +19,7 @@ indexing_pipeline.add_node(component=converter, name="PDFConverter", inputs=["Fi
 indexing_pipeline.add_node(component=preprocessor, name="PreProcessor", inputs=["PDFConverter"])
 indexing_pipeline.add_node(component=document_store, name="DocumentStore", inputs=["PreProcessor"])
 
-indexing_pipeline.run(file_paths=["social-benefit-programs.pdf"])
-
+indexing_pipeline.run(file_paths=[PDF])
 
 retriever = EmbeddingRetriever(
     document_store=document_store,
