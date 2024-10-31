@@ -15,6 +15,7 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 llm = ChatOllama(
     model="llama3.2",
     temperature=0,
+    num_thread=4,
 )
 
 vector_store = FAISS.load_local(
