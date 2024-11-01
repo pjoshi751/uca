@@ -1,5 +1,6 @@
-# Full end2end app 
+# Full end2end question/answer app
 
+import time
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_ollama import ChatOllama
@@ -15,7 +16,7 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 llm = ChatOllama(
     model="llama3.2",
     temperature=0,
-    num_thread=4,
+    num_thread=4,  # Change as per your CPU configuration
 )
 
 vector_store = FAISS.load_local(
@@ -39,5 +40,8 @@ rag_chain = (
     | StrOutputParser()
 )
 
+start = time.time()
 a = rag_chain.invoke("As a mother am I eligible for some progams?")
+end = time.time()
 print(a)
+print('time taken = %d secs' % (end - start))
