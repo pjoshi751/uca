@@ -20,7 +20,8 @@ def main():
     while 1:
         print('==== Say something')
         query = input()
-        print_ai_response(agent_executor, query, config)
+        r = get_ai_response(agent_executor, query, config)
+        print(r.pretty_repr())
 
 if __name__ == "__main__":
     main()
