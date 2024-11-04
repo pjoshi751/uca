@@ -44,7 +44,7 @@ def init_agent(embeddings_model, llm_model, faiss_index_path, tool_name, nthread
     tools = [tool]
     llm =  load_llama(llm_model, nthreads=nthreads)
     memory = MemorySaver()
-    system_prompt = '''You are an advisor. Have a conversation with the user. If the user has questions on eligility for programs, or availability of certain programs, answer those from the context. If you don't know the answer, just say that you don't know, don't try to make up an answer. Keep the answer as concise as possible. You can end the conversation once the user does not have any more enquiry. Make sure you remember the name of the user.'''
+    system_prompt = '''You are an advisor. Have a conversation with the user. If the user has questions on eligility for programs, or availability of certain programs, answer those from the context. If you don't know the answer, just say that you don't know, don't try to make up an answer. Keep the answer as concise as possible. You can end the conversation once the user does not have any more enquiry. Make sure you remember the name of the user across queries'''
     agent_executor = create_react_agent(llm, tools, checkpointer=memory, state_modifier=system_prompt)
 
     return agent_executor
